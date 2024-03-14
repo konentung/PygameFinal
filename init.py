@@ -9,14 +9,22 @@ def main():
     clock = pygame.time.Clock()
     
     # 彙整圖片
-    img_bg = pygame.image.load("bg.png")
+    # img_bg = pygame.image.load("bg.png")
     img_chara = [
         pygame.image.load("chara1.png"),
         pygame.image.load("chara2.png"),
     ]
-    tmr = 0
+    img_chara_2 = [
+        pygame.image.load("chara1.png"),
+        pygame.image.load("chara2.png"),
+    ]
     
+    # 設定參數
+    tmr = 0
+    x = 0
+    y = 160
     running = True
+    
     while running:
         tmr = tmr + 1
         
@@ -32,14 +40,21 @@ def main():
                     screen = pygame.display.set_mode((640, 360))
                 if event.key == pygame.K_F11:
                     screen = pygame.display.set_mode((640, 360), pygame.FULLSCREEN)
-                    
-        x = tmr%160
-        for i in range(5):
-            screen.blit(img_bg, [i*160-x, 0])
-            
-        # 更新遊戲畫面       
+
+        # 更新遊戲背景       
         screen.fill((0,0,0))
-        screen.blit(img_chara[tmr%2], (224,160))
+        
+        # 循環動畫
+        x = x + 16
+        screen.blit(img_chara[tmr%2], (x, y))
+        if x == width - 192:
+            x_ = -img_chara[tmr%2].get_width()
+        if x > width - 192:
+            x_ = x_ + 16
+            screen.blit(img_chara[tmr%2], (x_, y))
+        if x == width:
+            x = 0
+
         pygame.display.update()
         clock.tick(5)
 
