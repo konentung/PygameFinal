@@ -9,14 +9,14 @@ def main():
     clock = pygame.time.Clock()
     
     # 彙整圖片
-    # img_bg = pygame.image.load("bg.png")
+    # img_bg = pygame.image.load("pg_bg.png")
     img_chara = [
-        pygame.image.load("chara1.png"),
-        pygame.image.load("chara2.png"),
+        pygame.image.load("pg_chara1.png"),
+        pygame.image.load("pg_chara2.png"),
     ]
     img_chara_2 = [
-        pygame.image.load("chara1.png"),
-        pygame.image.load("chara2.png"),
+        pygame.image.load("pg_chara1.png"),
+        pygame.image.load("pg_chara2.png"),
     ]
     
     # 設定參數
