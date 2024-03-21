@@ -18,7 +18,7 @@ def main():
     pygame.display.set_caption("Slime")
     width, height = 800, 600
     screen = pygame.display.set_mode((width, height))
-    icon = pygame.image.load("0321/slime.png") # 載入圖片
+    icon = pygame.image.load("slime.png") # 載入圖片
     pygame.display.set_icon(icon)   # 設置視窗icon
 
     R_state=0 # 初始化按下狀態    
