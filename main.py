@@ -2,6 +2,7 @@ from configuration import *
 from weapons import *
 from sprites import *
 import sys
+import os
 import pygame
 
 class Spritesheet:
@@ -15,8 +16,19 @@ class Spritesheet:
         
         return sprite
     
+class mixer:
+    def __init__(self, path):
+        self.music = pygame.mixer.music.load(path)
+        self.sound = pygame.mixer.Sound(path)
+        
+    def play(self):
+        pygame.mixer.music.play(-1)
+        self.sound.play()
+    
 class Game:
     def __init__(self):
+        pygame.font.init()
+        pygame.mixer.init()
         self.screen = pygame.display.set_mode((WIN_WIDTH, WIN_HEIGHT))
         self.caption = pygame.display.set_caption('Adventure Game')
         self.clock = pygame.time.Clock()
@@ -28,6 +40,8 @@ class Game:
         self.fireballs_spritesheet = Spritesheet('assets/images/fireball.png')
         self.medicine_spritesheet = Spritesheet('assets/images/HP_medicine.png')
         self.campfire_spritesheet = Spritesheet('assets/images/campfire.png')
+        self.music = mixer('assets/sounds/music.mp3')
+        self.font_name = os.path.join('assets','font','font.ttf')
         self.running = True
         self.enemy_collided =False
         self.block_collided = False
@@ -76,6 +90,7 @@ class Game:
     
     def update(self):
         self.all_sprites.update()
+        self.music.play()
     
     def events(self):
         for event in pygame.event.get():
@@ -87,6 +102,13 @@ class Game:
         self.all_sprites.draw(self.screen)
         self.clock.tick(FPS)
         pygame.display.update()
+    
+    # def draw_text(self, text, size, x, y):
+    #     font = pygame.font.Font(self.font_name, size)
+    #     text_surface = font.render(text, True, WHITE)
+    #     text_rect = text_surface.get_rect()
+    #     text_rect.midtop = (x,y)
+    #     self.screen.blit(text_surface, text_rect)
     
     def camera(self):
         if self.enemy_collided==False and self.block_collided==False:
@@ -120,11 +142,28 @@ class Game:
             if self.player.health <=0:
                 self.running=False
 
+    # def draw_init(self):
+    #     self.screen.fill(BLACK)
+    #     self.draw_text('擊倒怪物們!', 64, WIN_WIDTH/2, WIN_HEIGHT/4)
+    #     self.draw_text('↑ ↓ ← → 控制主角移動，按下空白鍵發動攻擊', 20, WIN_WIDTH/2, WIN_HEIGHT/2)
+    #     self.draw_text('按Enter開始遊戲', 32, WIN_WIDTH/2, WIN_HEIGHT*3/4)
+    
+    # def draw_end(self):
+    #     self.screen.fill(BLACK)
+    #     self.draw_text('Game Over', 64, WIN_WIDTH/2, WIN_HEIGHT/4)
+    #     self.draw_text('按Enter重新開始', 32, WIN_WIDTH/2, WIN_HEIGHT*3/4)
+
 game = Game()
 game.create()
 
 while game.running:
-    game.main()
+    # if DRAW_INITIAL:
+    #     game.draw_init()
+    #     # keypress = pygame.key.get_pressed()
+    #     # if keypress[pygame.K_KP_ENTER]:
+    #     #     DRAW_INITIAL = False
+    # else:
+        game.main()
     
 pygame.quit()
 sys.exit()
